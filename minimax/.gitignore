@@ -1,0 +1,10 @@
+# Local workspace of the context module (seekdb + PowerContext data).
+.ctxmodule-data/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Test logs produced by the self-test. Copy the ones you want to submit
+# into materials/ instead of committing the raw artifacts.
+artifacts/*.log
+artifacts/*.jsonl

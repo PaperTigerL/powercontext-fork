@@ -1,0 +1,15 @@
+# Dependencies of the MiniMax SDD context module.
+#
+# Install together with the PowerContext product checkout:
+#
+#   uv pip install -e "$PRODUCT[seekdb,cli,server]" pytest pytest-asyncio
+#
+# The product itself provides the PowerContext dependencies; the packages
+# below are the ones this module uses directly.
+
+# Embedded seekdb engine (Linux x86_64 / macOS, CPython >= 3.12).
+pylibseekdb>=1.4.0.post1,<2; sys_platform == 'linux' or sys_platform == 'darwin'
+
+# Test runner for the six acceptance gates.
+pytest>=9,<10
+pytest-asyncio>=1.4,<2

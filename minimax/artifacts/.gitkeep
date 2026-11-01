@@ -1,0 +1,3 @@
+# Test logs and usage records are produced here by the self-test.
+# They are runtime artifacts; copy the ones you want to submit into
+# materials/ instead of committing them.

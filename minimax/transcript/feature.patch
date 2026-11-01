@@ -1,0 +1,47 @@
+--- a/src/billing/filter.py
++++ b/src/billing/filter.py
+@@ -9,10 +9,9 @@
+ * v2 (SPEC-BILL-001-F .. H): adds ``status`` filtering and makes the
+   multi-condition semantics an explicit intersection.
+ 
+-The file checked into the repository is the **pre-change** state: it
+-implements v1 only. The ``status`` keyword required by v2 is therefore
+-not implemented yet, and the target feature tests fail against this
+-snapshot for exactly that reason.
++This snapshot is the **post-change** state produced during the recorded
++MiniMax session: ``status`` filtering is implemented and multiple
++conditions intersect.
+ """
+ 
+ from __future__ import annotations
+@@ -29,10 +28,11 @@
+     *,
+     min_amount: float | None = None,
+     currency: str | None = None,
++    status: str | None = None,
+ ) -> list[BillingRecord]:
+     """Filter billing records.
+ 
+-    Implements SPEC-BILL-001-A, -B, -C, -D and -E.
++    Implements SPEC-BILL-001-A .. -H.
+ 
+     Parameters
+     ----------
+@@ -44,6 +44,9 @@
+     currency:
+         Keep records whose ``currency`` equals this value exactly.
+         ``None`` disables the check.
++    status:
++        Keep records whose ``status`` equals this value exactly.
++        ``None`` disables the check.
+     """
+ 
+     result = list(records)
+@@ -54,4 +57,7 @@
+     if currency is not None:
+         result = [record for record in result if record.currency == currency]
+ 
++    if status is not None:
++        result = [record for record in result if record.status == status]
++
+     return result

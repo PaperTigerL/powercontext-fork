@@ -1,0 +1,8 @@
+# The self-test has to run on Linux, so shell scripts and Python sources
+# must stay LF even when the working copy is checked out on Windows.
+*.sh text eol=lf
+*.py text eol=lf
+*.jsonl text eol=lf
+*.patch text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
