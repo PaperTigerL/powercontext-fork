@@ -198,6 +198,10 @@ rm -f transcript/minimax_session.jsonl transcript/feature.patch
    中的任务描述与规格条目即可。
 3. 自测在 Linux 上运行；Windows 上可用 WSL（`wsl -e bash -lc "..."`）。
 4. 模块不访问公网即可完成除 MiniMax 调用之外的全部流程；官方测试不需要模型 API Key。
+5. seekdb 数据目录与 `POWERCONTEXT_HOME` 必须位于 **Linux 本地文件系统**；放在 `/mnt/<盘符>`
+   （WSL 挂载的 Windows 盘）上会报 `seekdb_open failed: code=-1`。详见 6.2。
+6. `artifacts/` 随仓库提交，是材料 4 / 5 的一部分；重新录制 live 会话后请一并重跑
+   `python scripts/dump_usage.py` 刷新技术使用记录。
 
 ---
 
@@ -208,6 +212,36 @@ rm -f transcript/minimax_session.jsonl transcript/feature.patch
 | 1 完整源码 | 本目录（`ctxmodule/`、`sample_project/`、`verify/`、`scripts/`） |
 | 2 运行说明 | 本文件第 2 节 |
 | 3 验证样例 | 本文件第 3 节 + `materials/03_verification_sample.md` |
-| 4 代码与测试 | `materials/04_code_and_tests.md`（含修改前后快照、diff、测试与日志位置） |
-| 5 技术使用记录 | `materials/05_tech_usage.md`（含 MiniMax / 数据库 / PowerContext 三类记录的取数方式） |
+| 4 代码与测试 | `materials/04_code_and_tests.md`；修改前/后快照 `sample_project/src/billing/filter.py` 与 `transcript/after/src/billing/filter.py`；diff `transcript/feature.patch`；测试 `sample_project/tests/`；**运行日志 `artifacts/*.log`** |
+| 5 技术使用记录 | `materials/05_tech_usage.md`；**MiniMax 开发记录 `transcript/minimax_session.jsonl`**；**数据库查询记录 `artifacts/usage/seekdb-queries.txt`**；**PowerContext 状态写入与复用记录 `artifacts/usage/powercontext-state.txt`**；MiniMax 汇总 `artifacts/usage/minimax-usage.json` |
 | 6 一页技术说明 | 本文件第 1 节 |
+
+### 6.1 `artifacts/` 是提交的一部分
+
+`artifacts/` 里的内容**随仓库提交**（`.gitignore` 只排除本地工作目录 `.ctxmodule-data/`），
+因为官方对材料 4 和材料 5 明确要求"运行日志"和"技术使用记录"。
+
+| 文件 | 内容 | 重新生成 |
+| --- | --- | --- |
+| `artifacts/target-tests-before.log` | 修改前目标测试的**命令、退出码、stdout/stderr、代码版本** | `pytest -q tests/test_target.py`（修改前） |
+| `artifacts/target-tests-after.log` | 修改后目标测试日志（6 passed） | `pytest -q tests/test_target.py`（修改后） |
+| `artifacts/regression-tests-after.log` | 回归测试日志（7 passed） | `pytest -q tests/test_regression.py` |
+| `artifacts/usage/seekdb-queries.txt` | seekdb 实际执行的查询与命中行 | `python scripts/dump_usage.py` |
+| `artifacts/usage/powercontext-state.txt` | PowerContext 状态**写入 → 重启 → 读回**全过程 | `python scripts/dump_usage.py` |
+| `artifacts/usage/minimax-usage.json` | MiniMax 开发记录汇总 | `python scripts/dump_usage.py` |
+
+每条日志都含 `command` / `exit_code` / `code_version`，满足官方"测试日志需记录命令、退出码和对应代码版本"的要求。
+
+### 6.2 数据目录必须放在本地 Linux 文件系统
+
+`seekdb` 的数据目录和 `POWERCONTEXT_HOME` **不能放在 `/mnt/<盘符>`**（WSL 里的 Windows 盘）：
+seekdb 会报 `seekdb_open failed: code=-1`，SQLite 也无法加锁。
+
+```bash
+export CTXMODULE_SEEKDB_DIR=/tmp/ctxmodule-seekdb        # 或任意 Linux 本地路径
+export POWERCONTEXT_HOME=/tmp/ctxmodule-powercontext
+```
+
+`scripts/dump_usage.py` 默认就会用临时目录（`tempfile.mkdtemp`），因此开箱即用；
+只有当你显式设置了指向 `/mnt/...` 的环境变量时才会踩这个坑。
+

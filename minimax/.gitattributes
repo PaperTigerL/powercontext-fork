@@ -1,8 +1,16 @@
-# The self-test has to run on Linux, so shell scripts and Python sources
+# The self-test has to run on Linux, so every text file in this package
 # must stay LF even when the working copy is checked out on Windows.
+* text=auto eol=lf
+
 *.sh text eol=lf
 *.py text eol=lf
 *.jsonl text eol=lf
+*.json text eol=lf
 *.patch text eol=lf
 *.toml text eol=lf
 *.ini text eol=lf
+*.md text eol=lf
+*.log text eol=lf
+*.txt text eol=lf
+Makefile text eol=lf
+requirements.txt text eol=lf

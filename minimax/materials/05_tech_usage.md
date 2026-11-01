@@ -34,6 +34,9 @@
 `context_sources` 与当前选材结果一致、`diff_sha256` 与 `../transcript/feature.patch` 一致、
 `applied_files` 与补丁实际改动的文件一致。
 
+**随包提交的记录**：`../transcript/minimax_session.jsonl`（原始开发记录）与
+`../artifacts/usage/minimax-usage.json`（同一份记录的字段汇总，由 `python scripts/dump_usage.py` 生成）。
+
 > **提交前必须用你自己的 MiniMax 账号重新录制**：
 > ```bash
 > export MINIMAX_API_KEY=<你的 Key>
@@ -78,6 +81,9 @@ FROM ctx_documents WHERE doc_id = 'code:src/billing/filter.py';
 门禁 4 会验证：上下文中的每一条代码 / 测试来源都能在数据库行中**逐字回查**，
 且检索结果由查询驱动（无关词返回空集）。
 
+**随包提交的记录**：`../artifacts/usage/seekdb-queries.txt`——记录了数据库目录、表名、
+文档总数、检索命中的每一行（`doc_id / kind / path / source_hash`）以及最终进入上下文的来源清单。
+
 查看实际数据：
 
 ```bash
@@ -113,12 +119,20 @@ POST /v1/context/prepare    {"scope_id": ..., "query": "task state <task_id>", "
 **结束该 Server 进程并用同一 `POWERCONTEXT_HOME` 重新启动** → 再次读取状态并用于后续处理。
 这证明状态保存在 PowerContext 的持久化存储里，而不是进程内存。
 
+**随包提交的记录**：`../artifacts/usage/powercontext-state.txt`——由
+`python scripts/dump_usage.py` 生成，完整记录了这次**写入 → 重启 → 读回**的全过程：
+Server 启动命令、`POWERCONTEXT_HOME`、scope 标题与幂等键、写入的状态 JSON、
+重启后读回的状态 JSON，以及用读回的状态重新 `prepare_context` 得到的上下文。
+
 复现：
 
 ```bash
 export CTXMODULE_HTTP_LOG=artifacts/powercontext-calls.jsonl
 python -m ctxmodule state --task-id TASK-BILL-001
 cat artifacts/powercontext-calls.jsonl
+
+# 重新生成上面那份记录
+python scripts/dump_usage.py
 ```
 
 > HTTP 日志只记录请求路径、payload 的键名与响应状态码，**不记录任何凭据**。

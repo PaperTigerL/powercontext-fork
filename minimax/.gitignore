@@ -4,7 +4,6 @@
 __pycache__/
 *.pyc
 
-# Test logs produced by the self-test. Copy the ones you want to submit
-# into materials/ instead of committing the raw artifacts.
-artifacts/*.log
-artifacts/*.jsonl
+# artifacts/ is deliberately NOT ignored: the test logs and the technical
+# usage records are part of the submitted material (official requirement
+# "code and tests" and "technical usage record").

@@ -22,6 +22,12 @@ sys.path.insert(0, str(MINIMAX_ROOT))
 
 from ctxmodule.config import load_settings  # noqa: E402
 from ctxmodule.pc import PowerContextClient  # noqa: E402
+from ctxmodule.pc_server import (  # noqa: E402
+    free_port,
+    powercontext_command,
+    start_server,
+    stop_server,
+)
 from ctxmodule.seekdb_store import SeekDBStore  # noqa: E402
 from ctxmodule.tasks import TASK, TASK_ID, TERMS  # noqa: E402
 
@@ -31,10 +37,9 @@ PROJECT = MINIMAX_ROOT / "sample_project"
 TRANSCRIPT_DIR = MINIMAX_ROOT / "transcript"
 
 
-def free_port() -> int:
-    with socket.socket() as sock:
-        sock.bind(("127.0.0.1", 0))
-        return int(sock.getsockname()[1])
+# Kept under their historical names so the gates keep working unchanged.
+_start_server = start_server
+_stop_server = stop_server
 
 
 @pytest.fixture()
@@ -85,56 +90,7 @@ def _powercontext_command() -> list[str]:
     to be started through the installed console script.
     """
 
-    sibling = Path(sys.executable).parent / "powercontext"
-    if sibling.exists():
-        return [str(sibling)]
-    found = shutil.which("powercontext")
-    if found:
-        return [found]
-    return [sys.executable, "-m", "powercontext.cli.app"]
-
-
-def _start_server(home: Path) -> tuple[subprocess.Popen, int]:
-    port = free_port()
-    env = dict(os.environ)
-    env["POWERCONTEXT_HOME"] = str(home)
-    process = subprocess.Popen(
-        [
-            *_powercontext_command(),
-            "server",
-            "run",
-            "--host",
-            "127.0.0.1",
-            "--port",
-            str(port),
-        ],
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    deadline = time.time() + 90
-    while time.time() < deadline:
-        if process.poll() is not None:
-            output = process.stdout.read() if process.stdout else ""
-            raise RuntimeError(f"PowerContext server exited early:\n{output}")
-        try:
-            with socket.create_connection(("127.0.0.1", port), timeout=1):
-                return process, port
-        except OSError:
-            time.sleep(0.5)
-    _stop_server(process)
-    raise RuntimeError("PowerContext server did not become ready in time")
-
-
-def _stop_server(process: subprocess.Popen) -> None:
-    if process.poll() is None:
-        process.terminate()
-        try:
-            process.wait(timeout=20)
-        except subprocess.TimeoutExpired:  # pragma: no cover
-            process.kill()
-            process.wait(timeout=10)
+    return powercontext_command()
 
 
 @pytest.fixture()

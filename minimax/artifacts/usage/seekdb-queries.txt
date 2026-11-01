@@ -1,0 +1,18 @@
+# seekdb usage record
+
+database directory : /tmp/ctxmodule-seekdb-hv81j558
+table              : ctx_documents
+document count     : 6
+
+-- documents returned by the selection query --
+code:src/billing/filter.py	code	src/billing/filter.py	ca222902e2c74e6f
+code:src/billing/records.py	code	src/billing/records.py	fba87fb7238db8ab
+test:tests/test_regression.py	test	tests/test_regression.py	92703b5d40998a92
+test:tests/test_target.py	test	tests/test_target.py	1c70ded6f1ebd75a
+
+-- context sources --
+  spec:billing_filter_v2.md
+  code:src/billing/filter.py
+  code:src/billing/records.py
+  test:tests/test_regression.py
+  test:tests/test_target.py
