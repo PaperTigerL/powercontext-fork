@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MemCoach · 记忆复习教练</title>
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>MemCoach · 记忆复习教练</h1>
+    <p class="tagline">把学到的东西存进 PowerContext 长期记忆，之后按主题检索、复用、出题复习。</p>
+  </div>
+  <div class="status">
+    <span id="mode-badge" class="badge">连接中…</span>
+    <div id="pc-info" class="pc-info">正在检测后端…</div>
+    <div class="backend-box">
+      <input id="api-base" type="text" placeholder="后端地址，如 http://127.0.0.1:8787（留空=同源）" />
+      <button id="api-apply" type="button">连接</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="panel" id="panel-input">
+    <h2>① 录入学习卡片</h2>
+    <p class="hint">保存后调用 <code>POST /v1/memory/remember</code>，写入当前 scope 的长期记忆。</p>
+    <form id="card-form" autocomplete="off">
+      <label>标题
+        <input id="card-title" required placeholder="例如：倒排索引与向量索引的区别" />
+      </label>
+      <label>类型
+        <select id="card-type">
+          <option value="concept">概念</option>
+          <option value="decision">决策</option>
+          <option value="pitfall">踩坑</option>
+          <option value="fact">事实</option>
+        </select>
+      </label>
+      <label>要点（每行一条）
+        <textarea id="card-points" rows="4" placeholder="倒排索引从词项映射到文档列表&#10;向量索引用嵌入做近似最近邻"></textarea>
+      </label>
+      <label>标签（逗号分隔）
+        <input id="card-tags" placeholder="检索, RAG" />
+      </label>
+      <label>出处
+        <input id="card-source" placeholder="《信息检索导论》第 3 章" />
+      </label>
+      <button type="submit" class="primary">保存到长期记忆</button>
+    </form>
+    <div id="save-result" class="result"></div>
+  </section>
+
+  <section class="panel" id="panel-memory">
+    <h2>② 记忆库</h2>
+    <p class="hint">来自 <code>POST /v1/memory/entries/list</code>：同一个 scope 里的全部活跃条目。</p>
+    <div class="row">
+      <button id="refresh-memory" type="button">刷新</button>
+      <span id="memory-count" class="muted"></span>
+    </div>
+    <ul id="memory-list" class="memory-list"></ul>
+  </section>
+
+  <section class="panel" id="panel-search">
+    <h2>③ 检索记忆</h2>
+    <p class="hint">来自 <code>POST /v1/memory/search</code>：命中的是你之前保存过的记忆条目。</p>
+    <div class="row">
+      <input id="search-query" type="text" placeholder="输入主题关键词，例如 索引" />
+      <button id="do-search" type="button" class="primary">检索</button>
+    </div>
+    <div id="search-result" class="result"></div>
+  </section>
+
+  <section class="panel" id="panel-review">
+    <h2>④ 复习会话</h2>
+    <p class="hint">按主题检索记忆 → 用记忆内容出题 → 记录掌握度 → 掌握度影响下次复习排序。</p>
+    <div class="row">
+      <input id="review-query" type="text" placeholder="复习主题（留空 = 全部卡片）" />
+      <button id="start-review" type="button" class="primary">开始复习</button>
+    </div>
+    <div id="review-result" class="result"></div>
+  </section>
+
+  <section class="panel" id="panel-stats">
+    <h2>⑤ 学习足迹</h2>
+    <p class="hint">统计直接来自记忆库条目，不是浏览器本地计数。</p>
+    <div id="stats-result" class="result"></div>
+  </section>
+</main>
+
+<footer>
+  <p>MemCoach · 参赛作品《用 Qoder 做一个让学习、科研和工作更高效的项目》 · 记忆层：PowerContext Memory API</p>
+</footer>
+
+<script src="./domain.js"></script>
+<script src="./demo-data.js"></script>
+<script src="./demo-store.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "memcoach",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MemCoach 记忆复习教练 —— OceanBase 2026 大赛 Qoder 赛题参赛骨架（零第三方依赖）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check src/config.js && node --check src/errors.js && node --check src/powerContextClient.js && node --check src/powerContextStore.js && node --check src/routes.js && node --check src/static.js && node --check src/store.js && node --check public/domain.js && node --check public/demo-data.js && node --check public/demo-store.js && node --check public/app.js && node --check scripts/selftest.js && node --check scripts/mock-powercontext.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}
