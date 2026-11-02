@@ -1,0 +1,321 @@
+{
+  "documents": [
+    {
+      "id": "seekdb-1",
+      "topic": "seekdb",
+      "text": "seekdb 是 OceanBase 团队推出的 AI 原生搜索数据库，统一支持向量、全文与结构化检索。"
+    },
+    {
+      "id": "seekdb-2",
+      "topic": "seekdb",
+      "text": "seekdb 兼容 MySQL 协议，默认监听 2881 端口，可用标准客户端连接执行 SQL。"
+    },
+    {
+      "id": "seekdb-3",
+      "topic": "seekdb",
+      "text": "seekdb 提供嵌入式与服务器两种部署模式，嵌入式模式适合端侧与桌面应用。"
+    },
+    {
+      "id": "seekdb-4",
+      "topic": "seekdb",
+      "text": "seekdb 的向量索引支持 HNSW 与 IVF 系列算法，可配置距离度量与图参数。"
+    },
+    {
+      "id": "seekdb-5",
+      "topic": "seekdb",
+      "text": "seekdb 通过遥测文件记录部署实例的 UUID，用于赛事提测与使用统计。"
+    },
+    {
+      "id": "seekdb-6",
+      "topic": "seekdb",
+      "text": "seekdb 支持近似向量检索，在 ORDER BY 距离函数后加 APPROXIMATE 关键字启用。"
+    },
+    {
+      "id": "vector-1",
+      "topic": "vector",
+      "text": "向量检索将文本编码为稠密向量，通过距离度量找到语义相近的文档。"
+    },
+    {
+      "id": "vector-2",
+      "topic": "vector",
+      "text": "常用的向量距离度量包括余弦距离、欧氏距离与内积，选型影响检索效果。"
+    },
+    {
+      "id": "vector-3",
+      "topic": "vector",
+      "text": "HNSW 是一种基于分层可导航小世界图的近似最近邻索引，查询快且召回高。"
+    },
+    {
+      "id": "vector-4",
+      "topic": "vector",
+      "text": "IVF 系列索引通过倒排聚类缩小搜索范围，适合超大规模向量集合。"
+    },
+    {
+      "id": "vector-5",
+      "topic": "vector",
+      "text": "嵌入向量通常需要 L2 归一化，归一化后余弦距离与内积检索结果一致。"
+    },
+    {
+      "id": "vector-6",
+      "topic": "vector",
+      "text": "近似最近邻检索以少量召回损失换取数量级的延迟下降。"
+    },
+    {
+      "id": "embedding-1",
+      "topic": "embedding",
+      "text": "bge-small-zh-v1.5 是适合中文检索的小型 embedding 模型，输出 512 维向量。"
+    },
+    {
+      "id": "embedding-2",
+      "topic": "embedding",
+      "text": "all-MiniLM-L6-v2 是经典的英文句向量模型，体积小、速度快，适合端侧部署。"
+    },
+    {
+      "id": "embedding-3",
+      "topic": "embedding",
+      "text": "embedding 模型把变长文本映射为固定维度的稠密向量，保留语义信息。"
+    },
+    {
+      "id": "embedding-4",
+      "topic": "embedding",
+      "text": "端侧推理指模型在用户设备本地计算，不依赖云端 API，保护数据隐私。"
+    },
+    {
+      "id": "embedding-5",
+      "topic": "embedding",
+      "text": "句向量模型通常采用均值池化汇聚 token 表示，再归一化输出。"
+    },
+    {
+      "id": "embedding-6",
+      "topic": "embedding",
+      "text": "跨语言检索需要选择支持多语言的嵌入模型才能保证召回质量。"
+    },
+    {
+      "id": "quant-1",
+      "topic": "quant",
+      "text": "INT8 量化把模型权重从浮点压缩到 8 位整数，体积约减半且精度损失很小。"
+    },
+    {
+      "id": "quant-2",
+      "topic": "quant",
+      "text": "FP16 半精度浮点在 GPU 上吞吐更高，是 WebGPU 后端的常用推理精度。"
+    },
+    {
+      "id": "quant-3",
+      "topic": "quant",
+      "text": "ONNX 是一种开放模型格式，onnxruntime-web 可在浏览器中运行 ONNX 模型。"
+    },
+    {
+      "id": "quant-4",
+      "topic": "quant",
+      "text": "Transformers.js 让我们在浏览器里直接运行 Transformer 模型，无需服务端。"
+    },
+    {
+      "id": "quant-5",
+      "topic": "quant",
+      "text": "模型量化后的检索质量通常用 Recall@K 指标衡量，对比量化前后变化。"
+    },
+    {
+      "id": "quant-6",
+      "topic": "quant",
+      "text": "WASM 是 WebGPU 不可用时的降级推理后端，兼容性最好但速度较慢。"
+    },
+    {
+      "id": "webgpu-1",
+      "topic": "webgpu",
+      "text": "WebGPU 是新一代浏览器图形与通用计算 API，可加速神经网络推理。"
+    },
+    {
+      "id": "webgpu-2",
+      "topic": "webgpu",
+      "text": "浏览器端模型加载需要把 ONNX 权重与 tokenizer 一起打包到静态资源。"
+    },
+    {
+      "id": "webgpu-3",
+      "topic": "webgpu",
+      "text": "ONNX Runtime Web 支持 WebGPU、WASM 与 WebGL 多种执行后端。"
+    },
+    {
+      "id": "webgpu-4",
+      "topic": "webgpu",
+      "text": "端侧应用应检测运行环境，在不支持 WebGPU 时自动降级并提示用户。"
+    },
+    {
+      "id": "webgpu-5",
+      "topic": "webgpu",
+      "text": "模型文件体积直接影响首屏加载速度，压缩与缓存是常见优化手段。"
+    },
+    {
+      "id": "webgpu-6",
+      "topic": "webgpu",
+      "text": "Vite 可以把 npm 依赖打包为静态资源，适合构建纯前端 AI 应用。"
+    },
+    {
+      "id": "fts-1",
+      "topic": "fts",
+      "text": "全文检索基于分词与倒排索引，对关键词精确匹配的查询效果很好。"
+    },
+    {
+      "id": "fts-2",
+      "topic": "fts",
+      "text": "MySQL 的 MATCH AGAINST 语法用于在全文索引列上执行自然语言检索。"
+    },
+    {
+      "id": "fts-3",
+      "topic": "fts",
+      "text": "混合检索融合向量语义匹配与全文关键词匹配，兼顾理解与精确。"
+    },
+    {
+      "id": "fts-4",
+      "topic": "fts",
+      "text": "RRF 倒数排名融合是一种稳定的多路检索结果融合算法。"
+    },
+    {
+      "id": "fts-5",
+      "topic": "fts",
+      "text": "seekdb 支持在同一个集合上同时建立向量索引与全文索引。"
+    },
+    {
+      "id": "fts-6",
+      "topic": "fts",
+      "text": "检索结果的融合排序由数据库执行，避免客户端自行拼合两路结果。"
+    },
+    {
+      "id": "powercontext-1",
+      "topic": "powercontext",
+      "text": "PowerContext 为大模型应用提供记忆与上下文管理能力。"
+    },
+    {
+      "id": "powercontext-2",
+      "topic": "powercontext",
+      "text": "PowerContext 通过 Source 抽象保存采集到的原始证据，支持检索引用回查。"
+    },
+    {
+      "id": "powercontext-3",
+      "topic": "powercontext",
+      "text": "PowerContext 的 Runtime 负责持久化，投影为检索流程提供内容表示。"
+    },
+    {
+      "id": "powercontext-4",
+      "topic": "powercontext",
+      "text": "PowerContext 支持 CSV、Pi 会话、PDF 等多种来源的行级与页级采集。"
+    },
+    {
+      "id": "powercontext-5",
+      "topic": "powercontext",
+      "text": "PowerContext 提供 HTTP API，方便 Dify 等平台接入记忆能力。"
+    },
+    {
+      "id": "powercontext-6",
+      "topic": "powercontext",
+      "text": "PowerContext 的记忆处理可按新增来源条目数量触发，控制计算成本。"
+    },
+    {
+      "id": "oceanbase-1",
+      "topic": "oceanbase",
+      "text": "OceanBase 是蚂蚁集团开源的分布式关系型数据库，支持 HTAP 混合负载。"
+    },
+    {
+      "id": "oceanbase-2",
+      "topic": "oceanbase",
+      "text": "OceanBase 使用 PGA 日志与 Multi-Paxos 共识保证事务持久性与高可用。"
+    },
+    {
+      "id": "oceanbase-3",
+      "topic": "oceanbase",
+      "text": "OceanBase 的 SQL 引擎兼容 MySQL 协议，迁移成本较低。"
+    },
+    {
+      "id": "oceanbase-4",
+      "topic": "oceanbase",
+      "text": "分布式数据库通过分片与副本在多个节点间扩展存储与计算能力。"
+    },
+    {
+      "id": "oceanbase-5",
+      "topic": "oceanbase",
+      "text": "LSM 树结构把随机写转换为顺序写，提升写入吞吐。"
+    },
+    {
+      "id": "oceanbase-6",
+      "topic": "oceanbase",
+      "text": "compaction 负责合并 LSM 树的层级文件，控制读放大与空间放大。"
+    }
+  ],
+  "queries": [
+    {
+      "q": "seekdb 是什么数据库",
+      "expect": [
+        "seekdb"
+      ]
+    },
+    {
+      "q": "如何连接 seekdb",
+      "expect": [
+        "seekdb"
+      ]
+    },
+    {
+      "q": "向量检索的原理",
+      "expect": [
+        "vector"
+      ]
+    },
+    {
+      "q": "HNSW 索引的优点",
+      "expect": [
+        "vector"
+      ]
+    },
+    {
+      "q": "中文 embedding 模型有哪些",
+      "expect": [
+        "embedding"
+      ]
+    },
+    {
+      "q": "什么是端侧推理",
+      "expect": [
+        "embedding",
+        "webgpu"
+      ]
+    },
+    {
+      "q": "INT8 量化的效果",
+      "expect": [
+        "quant"
+      ]
+    },
+    {
+      "q": "WebGPU 加速推理",
+      "expect": [
+        "webgpu",
+        "quant"
+      ]
+    },
+    {
+      "q": "全文检索和向量检索的区别",
+      "expect": [
+        "fts",
+        "vector"
+      ]
+    },
+    {
+      "q": "混合检索如何融合结果",
+      "expect": [
+        "fts"
+      ]
+    },
+    {
+      "q": "PowerContext 的记忆能力",
+      "expect": [
+        "powercontext"
+      ]
+    },
+    {
+      "q": "OceanBase 的架构特点",
+      "expect": [
+        "oceanbase"
+      ]
+    }
+  ]
+}

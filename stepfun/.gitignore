@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+debug.log
+debug2.log
+bench.log
+errlines.txt
+.vite/

@@ -1,0 +1,39 @@
+{
+  "model": "bge-small-zh-v1.5",
+  "files": [
+    {
+      "file": "config.json",
+      "mb": 0
+    },
+    {
+      "file": "onnx/model_fp16.onnx",
+      "mb": 45.3
+    },
+    {
+      "file": "onnx/model_quantized.onnx",
+      "mb": 22.9
+    },
+    {
+      "file": "special_tokens_map.json",
+      "mb": 0
+    },
+    {
+      "file": "tokenizer.json",
+      "mb": 0.42
+    },
+    {
+      "file": "tokenizer_config.json",
+      "mb": 0
+    },
+    {
+      "file": "vocab.txt",
+      "mb": 0.1
+    }
+  ],
+  "fp32_upstream_mb": null,
+  "fp16_mb": 45.3,
+  "int8_mb": 22.9,
+  "ratio_fp16_vs_fp32": null,
+  "ratio_int8_vs_fp32": null,
+  "ratio_int8_vs_fp16": 1.98
+}

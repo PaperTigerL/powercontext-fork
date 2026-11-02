@@ -1,0 +1,325 @@
+{
+  "model": "bge-small-zh-v1.5",
+  "dimension": 512,
+  "at": "2026-11-02T05:29:52.004Z",
+  "variants": [
+    {
+      "dtype": "q8",
+      "collection": "edge_kb_int8_1793597387701",
+      "loadMs": 342,
+      "embedTotalMs": 496,
+      "embedPerDocMs": 10,
+      "writeMs": 1194,
+      "searchAvgMs": 20,
+      "recallAt10": 1,
+      "details": [
+        {
+          "q": "seekdb 是什么数据库",
+          "expect": [
+            "seekdb"
+          ],
+          "top": [
+            "seekdb-1",
+            "oceanbase-1",
+            "fts-5"
+          ],
+          "hit": true
+        },
+        {
+          "q": "如何连接 seekdb",
+          "expect": [
+            "seekdb"
+          ],
+          "top": [
+            "seekdb-2",
+            "seekdb-3",
+            "fts-5"
+          ],
+          "hit": true
+        },
+        {
+          "q": "向量检索的原理",
+          "expect": [
+            "vector"
+          ],
+          "top": [
+            "vector-2",
+            "vector-1",
+            "seekdb-1"
+          ],
+          "hit": true
+        },
+        {
+          "q": "HNSW 索引的优点",
+          "expect": [
+            "vector"
+          ],
+          "top": [
+            "fts-5",
+            "vector-4",
+            "fts-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "中文 embedding 模型有哪些",
+          "expect": [
+            "embedding"
+          ],
+          "top": [
+            "embedding-1",
+            "embedding-3",
+            "quant-3"
+          ],
+          "hit": true
+        },
+        {
+          "q": "什么是端侧推理",
+          "expect": [
+            "embedding",
+            "webgpu"
+          ],
+          "top": [
+            "embedding-4",
+            "embedding-2",
+            "quant-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "INT8 量化的效果",
+          "expect": [
+            "quant"
+          ],
+          "top": [
+            "quant-1",
+            "quant-5",
+            "vector-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "WebGPU 加速推理",
+          "expect": [
+            "webgpu",
+            "quant"
+          ],
+          "top": [
+            "webgpu-1",
+            "quant-6",
+            "quant-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "全文检索和向量检索的区别",
+          "expect": [
+            "fts",
+            "vector"
+          ],
+          "top": [
+            "fts-3",
+            "vector-1",
+            "seekdb-1"
+          ],
+          "hit": true
+        },
+        {
+          "q": "混合检索如何融合结果",
+          "expect": [
+            "fts"
+          ],
+          "top": [
+            "fts-4",
+            "fts-6",
+            "fts-3"
+          ],
+          "hit": true
+        },
+        {
+          "q": "PowerContext 的记忆能力",
+          "expect": [
+            "powercontext"
+          ],
+          "top": [
+            "powercontext-1",
+            "powercontext-5",
+            "powercontext-6"
+          ],
+          "hit": true
+        },
+        {
+          "q": "OceanBase 的架构特点",
+          "expect": [
+            "oceanbase"
+          ],
+          "top": [
+            "oceanbase-1",
+            "seekdb-1",
+            "oceanbase-6"
+          ],
+          "hit": true
+        }
+      ]
+    },
+    {
+      "dtype": "fp16",
+      "collection": "edge_kb_fp16_1793597387701",
+      "loadMs": 287,
+      "embedTotalMs": 553,
+      "embedPerDocMs": 12,
+      "writeMs": 667,
+      "searchAvgMs": 12,
+      "recallAt10": 1,
+      "details": [
+        {
+          "q": "seekdb 是什么数据库",
+          "expect": [
+            "seekdb"
+          ],
+          "top": [
+            "seekdb-1",
+            "fts-5",
+            "oceanbase-1"
+          ],
+          "hit": true
+        },
+        {
+          "q": "如何连接 seekdb",
+          "expect": [
+            "seekdb"
+          ],
+          "top": [
+            "seekdb-2",
+            "seekdb-3",
+            "fts-5"
+          ],
+          "hit": true
+        },
+        {
+          "q": "向量检索的原理",
+          "expect": [
+            "vector"
+          ],
+          "top": [
+            "vector-2",
+            "vector-1",
+            "vector-5"
+          ],
+          "hit": true
+        },
+        {
+          "q": "HNSW 索引的优点",
+          "expect": [
+            "vector"
+          ],
+          "top": [
+            "fts-5",
+            "vector-4",
+            "fts-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "中文 embedding 模型有哪些",
+          "expect": [
+            "embedding"
+          ],
+          "top": [
+            "embedding-1",
+            "embedding-3",
+            "quant-3"
+          ],
+          "hit": true
+        },
+        {
+          "q": "什么是端侧推理",
+          "expect": [
+            "embedding",
+            "webgpu"
+          ],
+          "top": [
+            "embedding-4",
+            "embedding-2",
+            "quant-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "INT8 量化的效果",
+          "expect": [
+            "quant"
+          ],
+          "top": [
+            "quant-1",
+            "quant-5",
+            "vector-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "WebGPU 加速推理",
+          "expect": [
+            "webgpu",
+            "quant"
+          ],
+          "top": [
+            "webgpu-1",
+            "quant-6",
+            "quant-2"
+          ],
+          "hit": true
+        },
+        {
+          "q": "全文检索和向量检索的区别",
+          "expect": [
+            "fts",
+            "vector"
+          ],
+          "top": [
+            "fts-3",
+            "seekdb-1",
+            "vector-1"
+          ],
+          "hit": true
+        },
+        {
+          "q": "混合检索如何融合结果",
+          "expect": [
+            "fts"
+          ],
+          "top": [
+            "fts-4",
+            "fts-6",
+            "fts-3"
+          ],
+          "hit": true
+        },
+        {
+          "q": "PowerContext 的记忆能力",
+          "expect": [
+            "powercontext"
+          ],
+          "top": [
+            "powercontext-1",
+            "powercontext-5",
+            "powercontext-6"
+          ],
+          "hit": true
+        },
+        {
+          "q": "OceanBase 的架构特点",
+          "expect": [
+            "oceanbase"
+          ],
+          "top": [
+            "oceanbase-1",
+            "seekdb-1",
+            "oceanbase-6"
+          ],
+          "hit": true
+        }
+      ]
+    }
+  ]
+}

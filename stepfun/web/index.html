@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>端侧迷你知识库 · seekdb 混合检索</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header>
+    <h1>端侧迷你知识库</h1>
+    <span class="badge" id="backend">推理后端: 加载中</span>
+    <span class="badge" id="model">模型: -</span>
+    <span class="badge" id="count">集合: -</span>
+    <span class="badge">存储/检索: seekdb（向量+全文混合）</span>
+    <select id="dtype" title="WASM 降级时的量化精度">
+      <option value="q8">WASM 量化: INT8</option>
+      <option value="fp16">WASM 量化: FP16</option>
+    </select>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>1. 导入语料（浏览器本地向量化 → seekdb）</h2>
+      <textarea id="docs" placeholder="每行一条文档，例如：&#10;seekdb 是 AI 原生的搜索数据库&#10;HNSW 是一种近似最近邻图索引&#10;OceanBase 是分布式关系型数据库"></textarea>
+      <div class="row">
+        <button id="import">向量化并写入 seekdb</button>
+        <span class="muted">向量在本地计算，禁止云端推理；写入后自动刷新向量索引</span>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>2. 混合检索（seekdb 内完成向量+全文融合）</h2>
+      <input type="text" id="q" placeholder="输入查询，例如：什么是向量数据库" />
+      <div class="row">
+        <button id="search">检索</button>
+        <span class="muted">查询向量同样在本地生成；RRF 融合由数据库执行</span>
+      </div>
+      <div id="status"></div>
+      <div id="results"></div>
+    </section>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "stepfun-edge-knowledge-base",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "端侧迷你知识库：浏览器本地向量化（Transformers.js · WebGPU/WASM · FP16/INT8）+ seekdb 向量与全文混合检索",
+  "scripts": {
+    "download-models": "node scripts/download-models.mjs",
+    "gen-corpus": "node scripts/gen-corpus.mjs",
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server/index.mjs",
+    "bench": "node scripts/benchmark.mjs",
+    "size-report": "node scripts/size-report.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.6",
+    "seekdb": "^1.4.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}
