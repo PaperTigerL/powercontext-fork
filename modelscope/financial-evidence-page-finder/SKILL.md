@@ -169,3 +169,5 @@ python scripts/find_evidence.py --text report.txt \
 - `references/scoring.md`：打分模型、权重与同义扩展表的说明。
 - `references/reproduction.md`：用任意公开 10-K 复现的完整步骤。
 - `examples/sample_questions.md`：可直接套用的示例问题与期望结果。
+
+<!-- OB-S:YovEQtMAolusSewcpgeecA -->
