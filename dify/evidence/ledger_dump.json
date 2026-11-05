@@ -1,0 +1,60 @@
+{
+  "memory": {
+    "family": "memory",
+    "artifact_id": "memory",
+    "revision": 3
+  },
+  "entries": [
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+        "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_660dbf716d3142db81df15e584d00a31",
+        "entry_version_id": "mem_ver_17699a99fa3341f4b140b15664c90130"
+      },
+      "version": 1,
+      "kind": "npc-name",
+      "text": "name=小笼包",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+        "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    }
+  ]
+}

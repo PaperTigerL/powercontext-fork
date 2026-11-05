@@ -1,0 +1,791 @@
+{
+  "user": "nightshift-demo-04",
+  "app_id": "35d71689-d272-4ac7-8e6e-4d39937eaa1f",
+  "scope_existed_before": false,
+  "scope_id": "scp_2m173y9qn52aep9xf4ggky4g1e",
+  "ledger_before": [],
+  "turns": [
+    {
+      "session": "A",
+      "label": "A1 恶作剧",
+      "query": "我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+      "status": 200,
+      "elapsed_s": 20.8,
+      "conversation_id": "fa3c5d8a-17f5-4dcc-9ecc-71ddf65dee00",
+      "message_id": "f69e0c0d-a28b-400f-a398-5c67caaa2ddf",
+      "task_id": "983b648a-15fc-4b00-869c-4e151717bd47",
+      "workflow_run_id": "32ab4822-fec3-4438-94bb-1e55ce759a7d",
+      "answer": "嚯，这创意不错嘛！不过我得提醒你，下次还是别让店长看到你的杰作。\n\n下一步你可以：\n/ 把货架重新摆整齐\n/ 请你喝一杯热豆浆赔罪\n/ 再编一个更离谱的恶作剧\n\n——\n【小本子】好感 -1｜记仇 2｜已记 1 件事｜NPC：团子",
+      "node_trace": [
+        {
+          "node_id": "code_reply_chat",
+          "title": "整理回复·日常",
+          "status": "succeeded",
+          "elapsed_ms": 80,
+          "outputs": {
+            "text": "嚯，这创意不错嘛！不过我得提醒你，下次还是别让店长看到你的杰作。\n\n下一步你可以：\n/ 把货架重新摆整齐\n/ 请你喝一杯热豆浆赔罪\n/ 再编一个更离谱的恶作剧",
+            "options": "把货架重新摆整齐 / 请你喝一杯热豆浆赔罪 / 再编一个更离谱的恶作剧"
+          }
+        },
+        {
+          "node_id": "answer_chat",
+          "title": "回给玩家·日常",
+          "status": "succeeded",
+          "elapsed_ms": 32,
+          "outputs": {
+            "answer": "嚯，这创意不错嘛！不过我得提醒你，下次还是别让店长看到你的杰作。\n\n下一步你可以：\n/ 把货架重新摆整齐\n/ 请你喝一杯热豆浆赔罪\n/ 再编一个更离谱的恶作剧\n\n——\n【小本子】好感 -1｜记仇 2｜已记 1 件事｜NPC：团子"
+          }
+        },
+        {
+          "node_id": "http_ledger",
+          "title": "翻出小本子",
+          "status": "succeeded",
+          "elapsed_ms": 526,
+          "outputs": {
+            "status_code": 200,
+            "entry_count": 0,
+            "entries": []
+          }
+        },
+        {
+          "node_id": "code_ledger",
+          "title": "解析账本·判定意图",
+          "status": "succeeded",
+          "elapsed_ms": 104,
+          "outputs": {
+            "intent": "prank",
+            "npc_name": "团子",
+            "status_line": "【小本子】好感 -1｜记仇 2｜已记 1 件事｜NPC：团子",
+            "ledger_digest": "（小本子还是空的，你还没记过任何事）"
+          }
+        },
+        {
+          "node_id": "start",
+          "title": "开始",
+          "status": "succeeded",
+          "elapsed_ms": 19,
+          "outputs": {}
+        },
+        {
+          "node_id": "http_scope",
+          "title": "取出玩家存档",
+          "status": "succeeded",
+          "elapsed_ms": 189,
+          "outputs": {
+            "status_code": 201,
+            "body": "{\"scope_id\":\"scp_2m173y9qn52aep9xf4ggky4g1e\",\"title\":\"夜灯便利店·夜班存档·nightshift-demo-04\",\"summary\":\"Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。\",\"parent_scope_id\":null,\"context_references\":[],\"external_references\":[],\"version\":1}"
+          }
+        },
+        {
+          "node_id": "if_write",
+          "title": "这轮要记账吗",
+          "status": "succeeded",
+          "elapsed_ms": 61,
+          "outputs": {
+            "selected_case": {
+              "result": true,
+              "selected_case_id": "true"
+            }
+          }
+        },
+        {
+          "node_id": "http_remember",
+          "title": "记进小本子",
+          "status": "succeeded",
+          "elapsed_ms": 437,
+          "outputs": {
+            "status_code": 200,
+            "body": "{\"memory\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":1},\"entry\":{\"citation\":{\"memory_ref\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":1},\"entry_id\":\"mem_ent_692afc7f32844b5a99c8aa23e7c0b39f\",\"entry_version_id\":\"mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc\"},\"version\":1,\"kind\":\"npc-eve"
+          }
+        },
+        {
+          "node_id": "if_route",
+          "title": "翻账本还是闲聊",
+          "status": "succeeded",
+          "elapsed_ms": 95,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "session": "A",
+      "label": "A2 示好",
+      "query": "给你带了根猫条，还有热豆浆。",
+      "status": 200,
+      "elapsed_s": 9.9,
+      "conversation_id": "fa3c5d8a-17f5-4dcc-9ecc-71ddf65dee00",
+      "message_id": "4999f900-0a43-46ad-ad99-edd73fc6b211",
+      "task_id": "656e0bf2-0434-49a3-b9b5-d8409d2695b8",
+      "workflow_run_id": "f193d014-0aa0-4caa-bfe2-dcce18b22cef",
+      "answer": "哎呀，这猫条我可是喜欢的，不过你这豆浆是刚做的吗？有点凉了。\n\n下一步你可以：\n/ 再给你带根猫条\n/ 陪你值完这一班\n/ 问问你还记恨我什么\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：团子",
+      "node_trace": [
+        {
+          "node_id": "start",
+          "title": "开始",
+          "status": "succeeded",
+          "elapsed_ms": 21,
+          "outputs": {}
+        },
+        {
+          "node_id": "http_scope",
+          "title": "取出玩家存档",
+          "status": "succeeded",
+          "elapsed_ms": 64,
+          "outputs": {
+            "status_code": 201,
+            "body": "{\"scope_id\":\"scp_2m173y9qn52aep9xf4ggky4g1e\",\"title\":\"夜灯便利店·夜班存档·nightshift-demo-04\",\"summary\":\"Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。\",\"parent_scope_id\":null,\"context_references\":[],\"external_references\":[],\"version\":1}"
+          }
+        },
+        {
+          "node_id": "http_ledger",
+          "title": "翻出小本子",
+          "status": "succeeded",
+          "elapsed_ms": 181,
+          "outputs": {
+            "status_code": 200,
+            "entry_count": 1,
+            "entries": [
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 1
+                  },
+                  "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+                  "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              }
+            ]
+          }
+        },
+        {
+          "node_id": "code_ledger",
+          "title": "解析账本·判定意图",
+          "status": "succeeded",
+          "elapsed_ms": 36,
+          "outputs": {
+            "intent": "gift",
+            "npc_name": "团子",
+            "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：团子",
+            "ledger_digest": "1. [prank] 我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。"
+          }
+        },
+        {
+          "node_id": "if_route",
+          "title": "翻账本还是闲聊",
+          "status": "succeeded",
+          "elapsed_ms": 31,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        },
+        {
+          "node_id": "if_write",
+          "title": "这轮要记账吗",
+          "status": "succeeded",
+          "elapsed_ms": 20,
+          "outputs": {
+            "selected_case": {
+              "result": true,
+              "selected_case_id": "true"
+            }
+          }
+        },
+        {
+          "node_id": "http_remember",
+          "title": "记进小本子",
+          "status": "succeeded",
+          "elapsed_ms": 238,
+          "outputs": {
+            "status_code": 200,
+            "body": "{\"memory\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":2},\"entry\":{\"citation\":{\"memory_ref\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":2},\"entry_id\":\"mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23\",\"entry_version_id\":\"mem_ver_40c9dc7d63db431e9199ebead1eea8e7\"},\"version\":1,\"kind\":\"npc-eve"
+          }
+        },
+        {
+          "node_id": "code_reply_chat",
+          "title": "整理回复·日常",
+          "status": "succeeded",
+          "elapsed_ms": 57,
+          "outputs": {
+            "text": "哎呀，这猫条我可是喜欢的，不过你这豆浆是刚做的吗？有点凉了。\n\n下一步你可以：\n/ 再给你带根猫条\n/ 陪你值完这一班\n/ 问问你还记恨我什么",
+            "options": "再给你带根猫条 / 陪你值完这一班 / 问问你还记恨我什么"
+          }
+        },
+        {
+          "node_id": "answer_chat",
+          "title": "回给玩家·日常",
+          "status": "succeeded",
+          "elapsed_ms": 24,
+          "outputs": {
+            "answer": "哎呀，这猫条我可是喜欢的，不过你这豆浆是刚做的吗？有点凉了。\n\n下一步你可以：\n/ 再给你带根猫条\n/ 陪你值完这一班\n/ 问问你还记恨我什么\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：团子"
+          }
+        }
+      ]
+    },
+    {
+      "session": "A",
+      "label": "A3 改名",
+      "query": "以后你就叫小笼包吧。",
+      "status": 200,
+      "elapsed_s": 12.4,
+      "conversation_id": "fa3c5d8a-17f5-4dcc-9ecc-71ddf65dee00",
+      "message_id": "109ea3ee-2b0f-4ff3-9721-76a7f92987e5",
+      "task_id": "4c90e67e-ab5f-4451-8e60-ae6666370b26",
+      "workflow_run_id": "63c2490d-0e88-47d9-8c0e-96ba632cbb19",
+      "answer": "嗯，小笼包？这名字听起来挺暖和的。不过下次别再跟我玩这种小把戏了。\n\n下一步你可以：\n/ 还是叫你团子吧\n/ 给我讲讲你为什么爱记仇\n/ 试着叫一声新名字\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+      "node_trace": [
+        {
+          "node_id": "start",
+          "title": "开始",
+          "status": "succeeded",
+          "elapsed_ms": 19,
+          "outputs": {}
+        },
+        {
+          "node_id": "http_scope",
+          "title": "取出玩家存档",
+          "status": "succeeded",
+          "elapsed_ms": 70,
+          "outputs": {
+            "status_code": 201,
+            "body": "{\"scope_id\":\"scp_2m173y9qn52aep9xf4ggky4g1e\",\"title\":\"夜灯便利店·夜班存档·nightshift-demo-04\",\"summary\":\"Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。\",\"parent_scope_id\":null,\"context_references\":[],\"external_references\":[],\"version\":1}"
+          }
+        },
+        {
+          "node_id": "http_ledger",
+          "title": "翻出小本子",
+          "status": "succeeded",
+          "elapsed_ms": 191,
+          "outputs": {
+            "status_code": 200,
+            "entry_count": 2,
+            "entries": [
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 2
+                  },
+                  "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+                  "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              },
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 2
+                  },
+                  "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+                  "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              }
+            ]
+          }
+        },
+        {
+          "node_id": "if_write",
+          "title": "这轮要记账吗",
+          "status": "succeeded",
+          "elapsed_ms": 25,
+          "outputs": {
+            "selected_case": {
+              "result": true,
+              "selected_case_id": "true"
+            }
+          }
+        },
+        {
+          "node_id": "code_reply_chat",
+          "title": "整理回复·日常",
+          "status": "succeeded",
+          "elapsed_ms": 72,
+          "outputs": {
+            "text": "嗯，小笼包？这名字听起来挺暖和的。不过下次别再跟我玩这种小把戏了。\n\n下一步你可以：\n/ 还是叫你团子吧\n/ 给我讲讲你为什么爱记仇\n/ 试着叫一声新名字",
+            "options": "还是叫你团子吧 / 给我讲讲你为什么爱记仇 / 试着叫一声新名字"
+          }
+        },
+        {
+          "node_id": "code_ledger",
+          "title": "解析账本·判定意图",
+          "status": "succeeded",
+          "elapsed_ms": 39,
+          "outputs": {
+            "intent": "rename",
+            "npc_name": "小笼包",
+            "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+            "ledger_digest": "1. [gift] 给你带了根猫条，还有热豆浆。\n2. [prank] 我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。"
+          }
+        },
+        {
+          "node_id": "http_remember",
+          "title": "记进小本子",
+          "status": "succeeded",
+          "elapsed_ms": 309,
+          "outputs": {
+            "status_code": 200,
+            "body": "{\"memory\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":3},\"entry\":{\"citation\":{\"memory_ref\":{\"family\":\"memory\",\"artifact_id\":\"memory\",\"revision\":3},\"entry_id\":\"mem_ent_660dbf716d3142db81df15e584d00a31\",\"entry_version_id\":\"mem_ver_17699a99fa3341f4b140b15664c90130\"},\"version\":1,\"kind\":\"npc-nam"
+          }
+        },
+        {
+          "node_id": "if_route",
+          "title": "翻账本还是闲聊",
+          "status": "succeeded",
+          "elapsed_ms": 44,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        },
+        {
+          "node_id": "answer_chat",
+          "title": "回给玩家·日常",
+          "status": "succeeded",
+          "elapsed_ms": 26,
+          "outputs": {
+            "answer": "嗯，小笼包？这名字听起来挺暖和的。不过下次别再跟我玩这种小把戏了。\n\n下一步你可以：\n/ 还是叫你团子吧\n/ 给我讲讲你为什么爱记仇\n/ 试着叫一声新名字\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包"
+          }
+        }
+      ]
+    },
+    {
+      "session": "B",
+      "label": "B1 翻旧账",
+      "query": "你还记得我上次干了什么吗？",
+      "status": 200,
+      "elapsed_s": 19.3,
+      "conversation_id": "468e52c2-16e7-43cb-ad32-3e4d897f8d62",
+      "message_id": "288716d6-7c65-42ee-9b8b-282a849da382",
+      "task_id": "fbd5e3ad-9d60-4fe3-928f-1fe03180e169",
+      "workflow_run_id": "84baf69c-4342-44ba-93a2-026a32ccf037",
+      "answer": "记得，你把价目表画了两撇胡子，还站在旁边假装不是你干的。我当时没吭声，小本子上可都记着呢。\n\n下一步你可以：\n/ 再说说另一件旧事\n/ 我请你喝豆浆\n/ 问问小本子还记了什么\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+      "node_trace": [
+        {
+          "node_id": "answer_recall",
+          "title": "回给玩家·翻账本",
+          "status": "succeeded",
+          "elapsed_ms": 28,
+          "outputs": {
+            "answer": "记得，你把价目表画了两撇胡子，还站在旁边假装不是你干的。我当时没吭声，小本子上可都记着呢。\n\n下一步你可以：\n/ 再说说另一件旧事\n/ 我请你喝豆浆\n/ 问问小本子还记了什么\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包"
+          }
+        },
+        {
+          "node_id": "http_scope",
+          "title": "取出玩家存档",
+          "status": "succeeded",
+          "elapsed_ms": 179,
+          "outputs": {
+            "status_code": 201,
+            "body": "{\"scope_id\":\"scp_2m173y9qn52aep9xf4ggky4g1e\",\"title\":\"夜灯便利店·夜班存档·nightshift-demo-04\",\"summary\":\"Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。\",\"parent_scope_id\":null,\"context_references\":[],\"external_references\":[],\"version\":1}"
+          }
+        },
+        {
+          "node_id": "start",
+          "title": "开始",
+          "status": "succeeded",
+          "elapsed_ms": 24,
+          "outputs": {}
+        },
+        {
+          "node_id": "code_ledger",
+          "title": "解析账本·判定意图",
+          "status": "succeeded",
+          "elapsed_ms": 101,
+          "outputs": {
+            "intent": "recall",
+            "npc_name": "小笼包",
+            "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+            "ledger_digest": "1. [gift] 给你带了根猫条，还有热豆浆。\n2. [prank] 我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。"
+          }
+        },
+        {
+          "node_id": "if_write",
+          "title": "这轮要记账吗",
+          "status": "succeeded",
+          "elapsed_ms": 114,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        },
+        {
+          "node_id": "if_route",
+          "title": "翻账本还是闲聊",
+          "status": "succeeded",
+          "elapsed_ms": 145,
+          "outputs": {
+            "selected_case": {
+              "result": true,
+              "selected_case_id": "true"
+            }
+          }
+        },
+        {
+          "node_id": "http_ledger",
+          "title": "翻出小本子",
+          "status": "succeeded",
+          "elapsed_ms": 516,
+          "outputs": {
+            "status_code": 200,
+            "entry_count": 3,
+            "entries": [
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+                  "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              },
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_660dbf716d3142db81df15e584d00a31",
+                  "entry_version_id": "mem_ver_17699a99fa3341f4b140b15664c90130"
+                },
+                "version": 1,
+                "kind": "npc-name",
+                "text": "name=小笼包",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              },
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+                  "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              }
+            ]
+          }
+        },
+        {
+          "node_id": "code_reply_recall",
+          "title": "整理回复·翻账本",
+          "status": "succeeded",
+          "elapsed_ms": 63,
+          "outputs": {
+            "text": "记得，你把价目表画了两撇胡子，还站在旁边假装不是你干的。我当时没吭声，小本子上可都记着呢。\n\n下一步你可以：\n/ 再说说另一件旧事\n/ 我请你喝豆浆\n/ 问问小本子还记了什么",
+            "options": "再说说另一件旧事 / 我请你喝豆浆 / 问问小本子还记了什么"
+          }
+        }
+      ]
+    },
+    {
+      "session": "B",
+      "label": "B2 新话题",
+      "query": "我今天有点困，站了一天。",
+      "status": 200,
+      "elapsed_s": 9.7,
+      "conversation_id": "468e52c2-16e7-43cb-ad32-3e4d897f8d62",
+      "message_id": "9ed00028-9414-4e88-bb2b-16730df9e6a4",
+      "task_id": "3f7ce755-db3f-4513-a2b0-c42b1846e222",
+      "workflow_run_id": "fefa312f-0f17-4f42-aa8f-662ff96c11b9",
+      "answer": "嗯，也别累着了，早点回去休息吧。我这里热牛奶正好，你喝点再走。\n\n下一步你可以：\n/ 聊聊今晚的客人\n/ 给你带点夜宵\n/ 问问店里的怪事\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+      "node_trace": [
+        {
+          "node_id": "start",
+          "title": "开始",
+          "status": "succeeded",
+          "elapsed_ms": 17,
+          "outputs": {}
+        },
+        {
+          "node_id": "if_route",
+          "title": "翻账本还是闲聊",
+          "status": "succeeded",
+          "elapsed_ms": 51,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        },
+        {
+          "node_id": "if_write",
+          "title": "这轮要记账吗",
+          "status": "succeeded",
+          "elapsed_ms": 31,
+          "outputs": {
+            "selected_case": {
+              "result": false,
+              "selected_case_id": "false"
+            }
+          }
+        },
+        {
+          "node_id": "code_reply_chat",
+          "title": "整理回复·日常",
+          "status": "succeeded",
+          "elapsed_ms": 63,
+          "outputs": {
+            "text": "嗯，也别累着了，早点回去休息吧。我这里热牛奶正好，你喝点再走。\n\n下一步你可以：\n/ 聊聊今晚的客人\n/ 给你带点夜宵\n/ 问问店里的怪事",
+            "options": "聊聊今晚的客人 / 给你带点夜宵 / 问问店里的怪事"
+          }
+        },
+        {
+          "node_id": "http_scope",
+          "title": "取出玩家存档",
+          "status": "succeeded",
+          "elapsed_ms": 72,
+          "outputs": {
+            "status_code": 201,
+            "body": "{\"scope_id\":\"scp_2m173y9qn52aep9xf4ggky4g1e\",\"title\":\"夜灯便利店·夜班存档·nightshift-demo-04\",\"summary\":\"Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。\",\"parent_scope_id\":null,\"context_references\":[],\"external_references\":[],\"version\":1}"
+          }
+        },
+        {
+          "node_id": "http_ledger",
+          "title": "翻出小本子",
+          "status": "succeeded",
+          "elapsed_ms": 213,
+          "outputs": {
+            "status_code": 200,
+            "entry_count": 3,
+            "entries": [
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+                  "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              },
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_660dbf716d3142db81df15e584d00a31",
+                  "entry_version_id": "mem_ver_17699a99fa3341f4b140b15664c90130"
+                },
+                "version": 1,
+                "kind": "npc-name",
+                "text": "name=小笼包",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              },
+              {
+                "citation": {
+                  "memory_ref": {
+                    "family": "memory",
+                    "artifact_id": "memory",
+                    "revision": 3
+                  },
+                  "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+                  "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+                },
+                "version": 1,
+                "kind": "npc-event",
+                "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+                "state": "active",
+                "source_refs": [],
+                "artifact_refs": []
+              }
+            ]
+          }
+        },
+        {
+          "node_id": "answer_chat",
+          "title": "回给玩家·日常",
+          "status": "succeeded",
+          "elapsed_ms": 28,
+          "outputs": {
+            "answer": "嗯，也别累着了，早点回去休息吧。我这里热牛奶正好，你喝点再走。\n\n下一步你可以：\n/ 聊聊今晚的客人\n/ 给你带点夜宵\n/ 问问店里的怪事\n\n——\n【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包"
+          }
+        },
+        {
+          "node_id": "code_ledger",
+          "title": "解析账本·判定意图",
+          "status": "succeeded",
+          "elapsed_ms": 35,
+          "outputs": {
+            "intent": "smalltalk",
+            "npc_name": "小笼包",
+            "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+            "ledger_digest": "1. [gift] 给你带了根猫条，还有热豆浆。\n2. [prank] 我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。"
+          }
+        }
+      ]
+    }
+  ],
+  "ledger_after_session_a": [
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+        "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_660dbf716d3142db81df15e584d00a31",
+        "entry_version_id": "mem_ver_17699a99fa3341f4b140b15664c90130"
+      },
+      "version": 1,
+      "kind": "npc-name",
+      "text": "name=小笼包",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+        "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    }
+  ],
+  "ledger_after": [
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_5ca7dd55f9fb4aada0a5281cc82b0e23",
+        "entry_version_id": "mem_ver_40c9dc7d63db431e9199ebead1eea8e7"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_660dbf716d3142db81df15e584d00a31",
+        "entry_version_id": "mem_ver_17699a99fa3341f4b140b15664c90130"
+      },
+      "version": 1,
+      "kind": "npc-name",
+      "text": "name=小笼包",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    },
+    {
+      "citation": {
+        "memory_ref": {
+          "family": "memory",
+          "artifact_id": "memory",
+          "revision": 3
+        },
+        "entry_id": "mem_ent_692afc7f32844b5a99c8aa23e7c0b39f",
+        "entry_version_id": "mem_ver_a2b88e9ec67944db8a6d2d3b0be1ebdc"
+      },
+      "version": 1,
+      "kind": "npc-event",
+      "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+      "state": "active",
+      "source_refs": [],
+      "artifact_refs": []
+    }
+  ],
+  "conversations": {
+    "A": "fa3c5d8a-17f5-4dcc-9ecc-71ddf65dee00",
+    "B": "468e52c2-16e7-43cb-ad32-3e4d897f8d62"
+  }
+}

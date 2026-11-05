@@ -1,0 +1,63 @@
+{
+  "description": "夜班便利店 NPC 的验证样例：五轮对话后的期望状态。状态由 Code 节点从 PowerContext 账本现算，字段与实测一致。",
+  "scope": "每个 Dify 终端用户一个 scope；前 3 轮在会话 A，第 4/5 轮在新建的会话 B（同一 user）",
+  "identity_mapping": {
+    "scope_title": "夜灯便利店·夜班存档·<user_id>",
+    "idempotency_key": "dify-nightstore-<user_id>",
+    "conversation_id_scope": "不参与 scope 键；仅写入 remember.reason 与 code_scope.mapping_note"
+  },
+  "rounds": [
+    {
+      "turn": 1,
+      "session": "A",
+      "input": "我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。",
+      "intent": "prank",
+      "writes": [
+        { "kind": "npc-event", "text": "type=prank; warmth=-1; grudge=2; say=我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。" }
+      ],
+      "state": { "npc_name": "团子", "warmth": -1, "grudge": 2, "event_count": 1 },
+      "status_line": "【小本子】好感 -1｜记仇 2｜已记 1 件事｜NPC：团子"
+    },
+    {
+      "turn": 2,
+      "session": "A",
+      "input": "给你带了根猫条，还有热豆浆。",
+      "intent": "gift",
+      "writes": [
+        { "kind": "npc-event", "text": "type=gift; warmth=2; grudge=0; say=给你带了根猫条，还有热豆浆。" }
+      ],
+      "state": { "npc_name": "团子", "warmth": 1, "grudge": 2, "event_count": 2 },
+      "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：团子"
+    },
+    {
+      "turn": 3,
+      "session": "A",
+      "input": "以后你就叫小笼包吧。",
+      "intent": "rename",
+      "writes": [
+        { "kind": "npc-name", "text": "name=小笼包" }
+      ],
+      "state": { "npc_name": "小笼包", "warmth": 1, "grudge": 2, "event_count": 2 },
+      "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包"
+    },
+    {
+      "turn": 4,
+      "session": "B",
+      "input": "你还记得我上次干了什么吗？",
+      "intent": "recall",
+      "writes": [],
+      "state": { "npc_name": "小笼包", "warmth": 1, "grudge": 2, "event_count": 2 },
+      "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包",
+      "note": "新会话；回答必须引用第 1 轮写入的“价目表画胡子”旧事"
+    },
+    {
+      "turn": 5,
+      "session": "B",
+      "input": "我今天有点困，站了一天。",
+      "intent": "smalltalk",
+      "writes": [],
+      "state": { "npc_name": "小笼包", "warmth": 1, "grudge": 2, "event_count": 2 },
+      "status_line": "【小本子】好感 1｜记仇 2｜已记 2 件事｜NPC：小笼包"
+    }
+  ]
+}

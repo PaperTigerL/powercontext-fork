@@ -1,0 +1,1165 @@
+version: 0.1.5
+kind: app
+app:
+  name: 打烊之后·便利店夜班 NPC
+  mode: advanced-chat
+  icon_background: '#FFEAD5'
+  description: 凌晨三点，夜灯便利店只剩你和一个会说话的老补货机。它把店里发生的事都记在小本子上， 包括你干过的坏事。本应用用 Dify 编排对话流程，用 PowerContext 保存并复用这些长期记忆： 每轮先读回账本、重建
+    NPC 的好感度与记仇值，再把值得记的事写回 PowerContext， 下次开新对话时 NPC 依然记得你。
+  use_icon_as_answer_icon: false
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - id: 7c1f0a52-3b4d-4e21-9c8a-1d2e3f4a5b60
+    name: PC_BASE_URL
+    description: PowerContext Server 的基地址，不带结尾斜杠。Docker 部署的 Dify 用 http://host.docker.internal:8000，同一 compose 网络用 http://powercontext:8000，原生部署用
+      http://127.0.0.1:8000
+    selector:
+    - env
+    - PC_BASE_URL
+    value: http://host.docker.internal:8000
+    value_type: string
+  - id: 9e3f2c74-5d6f-4a43-9e0c-3f4a5b6c7d82
+    name: PC_AUTH_TOKEN
+    description: PowerContext 的 Bearer token。默认安装未开启鉴权时留空即可；开启鉴权时填入服务端配置的 token
+    selector:
+    - env
+    - PC_AUTH_TOKEN
+    value: ''
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types: []
+      allowed_file_upload_methods: []
+      enabled: false
+      fileUploadConfig: {}
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 凌晨三点，夜灯便利店。收银台旁边那台老补货机亮了屏。 「喂，新来的夜班。」它说，「别以为我什么都不记得。」
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 我把货架上的布丁按颜色排成彩虹了，还给价目表画了两撇胡子。
+    - 给你带了根猫条，还有热豆浆。
+    - 以后你就叫小笼包吧。
+    - 你还记得我上次干了什么吗？
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: code
+      id: start-source-code_prepare-target
+      source: start
+      sourceHandle: source
+      target: code_prepare
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: http-request
+      id: code_prepare-source-http_scope-target
+      source: code_prepare
+      sourceHandle: source
+      target: http_scope
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: code
+      id: http_scope-source-code_scope-target
+      source: http_scope
+      sourceHandle: source
+      target: code_scope
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: http-request
+      id: code_scope-source-http_ledger-target
+      source: code_scope
+      sourceHandle: source
+      target: http_ledger
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: code
+      id: http_ledger-source-code_ledger-target
+      source: http_ledger
+      sourceHandle: source
+      target: code_ledger
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: code_ledger-source-if_write-target
+      source: code_ledger
+      sourceHandle: source
+      target: if_write
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: http-request
+      id: if_write-true-http_remember-target
+      source: if_write
+      sourceHandle: 'true'
+      target: http_remember
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: if_write-false-if_route-target
+      source: if_write
+      sourceHandle: 'false'
+      target: if_route
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: if-else
+      id: http_remember-source-if_route-target
+      source: http_remember
+      sourceHandle: source
+      target: if_route
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: if_route-true-llm_recall-target
+      source: if_route
+      sourceHandle: 'true'
+      target: llm_recall
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: if_route-false-llm_chat-target
+      source: if_route
+      sourceHandle: 'false'
+      target: llm_chat
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: llm_recall-source-code_reply_recall-target
+      source: llm_recall
+      sourceHandle: source
+      target: code_reply_recall
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: code_reply_recall-source-answer_recall-target
+      source: code_reply_recall
+      sourceHandle: source
+      target: answer_recall
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: llm_chat-source-code_reply_chat-target
+      source: llm_chat
+      sourceHandle: source
+      target: code_reply_chat
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: code_reply_chat-source-answer_chat-target
+      source: code_reply_chat
+      sourceHandle: source
+      target: answer_chat
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 玩家在聊天框里说的那一句话
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 90
+      id: start
+      position:
+        x: 30
+        y: 420
+      positionAbsolute:
+        x: 30
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+
+          def main(user_id: str, conversation_id: str) -> dict:
+              uid = (user_id or "").strip() or "anonymous"
+              conv = (conversation_id or "").strip() or uid
+              body = json.dumps(
+                  {
+                      "title": "夜灯便利店·夜班存档·%s" % uid[:60],
+                      "summary": "Dify 应用《打烊之后·便利店夜班 NPC》的长期记忆存档：NPC 的小本子、玩家偏好与剧情进展都保存在这个 Scope 的 Memory 里。",
+                      "idempotency_key": "dify-nightstore-%s" % uid[:80],
+                  },
+                  ensure_ascii=False,
+              )
+              return {"create_body": body, "user_id": uid, "conversation_id": conv}
+        code_language: python3
+        desc: 用 Dify 的 user_id 生成玩家存档键：同一个人跨会话共用一份记忆，不同玩家互相隔离；请求体交给 json.dumps，避免拼接注入
+        outputs:
+          create_body:
+            children: null
+            type: string
+          user_id:
+            children: null
+            type: string
+          conversation_id:
+            children: null
+            type: string
+        selected: false
+        title: 准备玩家存档
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - user_id
+          variable: user_id
+        - value_selector:
+          - sys
+          - conversation_id
+          variable: conversation_id
+      height: 120
+      id: code_prepare
+      position:
+        x: 330
+        y: 420
+      positionAbsolute:
+        x: 330
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: scope-body
+            key: ''
+            type: text
+            value: '{{#code_prepare.create_body#}}'
+          type: json
+        desc: POST /v1/scopes —— 按玩家创建（或幂等复用）PowerContext 存档，一个玩家一份记忆
+        headers: |-
+          Content-Type:application/json
+          Authorization: Bearer {{#env.PC_AUTH_TOKEN#}}
+        method: post
+        params: ''
+        selected: false
+        title: 取出玩家存档
+        type: http-request
+        url: '{{#env.PC_BASE_URL#}}/v1/scopes'
+      height: 218
+      id: http_scope
+      position:
+        x: 630
+        y: 420
+      positionAbsolute:
+        x: 630
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+
+          def main(scope_json: str, user_id: str, conversation_id: str) -> dict:
+              scope_id = ""
+              try:
+                  data = json.loads(scope_json or "{}")
+                  if isinstance(data, dict):
+                      scope_id = (data.get("scope_id") or "").strip()
+              except Exception:
+                  scope_id = ""
+              list_body = json.dumps({"scope_id": scope_id}, ensure_ascii=False)
+              note = "user=%s; conversation=%s; scope=%s" % (
+                  (user_id or "").strip() or "anonymous",
+                  (conversation_id or "").strip() or "-",
+                  scope_id or "missing",
+              )
+              return {"scope_id": scope_id, "list_body": list_body, "mapping_note": note}
+        code_language: python3
+        desc: 从 Scope 响应里取 scope_id，并用 json.dumps 生成读账本请求体（scope_id 绝不直接拼进 JSON）
+        outputs:
+          scope_id:
+            children: null
+            type: string
+          list_body:
+            children: null
+            type: string
+          mapping_note:
+            children: null
+            type: string
+        selected: false
+        title: 解析存档·生成请求体
+        type: code
+        variables:
+        - value_selector:
+          - http_scope
+          - body
+          variable: scope_json
+        - value_selector:
+          - code_prepare
+          - user_id
+          variable: user_id
+        - value_selector:
+          - code_prepare
+          - conversation_id
+          variable: conversation_id
+      height: 120
+      id: code_scope
+      position:
+        x: 930
+        y: 420
+      positionAbsolute:
+        x: 930
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: ledger-body
+            key: ''
+            type: text
+            value: '{{#code_scope.list_body#}}'
+          type: json
+        desc: POST /v1/memory/entries/list —— 把这个存档下的全部活跃记忆条目读回来，这就是 NPC 的"小本子"
+        headers: |-
+          Content-Type:application/json
+          Authorization: Bearer {{#env.PC_AUTH_TOKEN#}}
+        method: post
+        params: ''
+        selected: false
+        title: 翻出小本子
+        type: http-request
+        url: '{{#env.PC_BASE_URL#}}/v1/memory/entries/list'
+      height: 218
+      id: http_ledger
+      position:
+        x: 1230
+        y: 420
+      positionAbsolute:
+        x: 1230
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |-
+          import json
+          import re
+
+          PRANK_WORDS = [
+              "恶作剧", "恶搞", "整蛊", "捉弄", "捣乱", "搞事", "搞破坏", "开玩笑",
+              "彩虹", "排成", "按颜色", "橡皮筋", "弹珠", "便利贴", "画胡子",
+              "偷吃", "顺走", "拿走", "藏起来", "骗",
+          ]
+
+          GIFT_WORDS = [
+              "猫条", "小鱼干", "零食", "礼物", "奶茶", "咖啡", "饮料", "豆浆",
+              "鲜花", "小花花", "擦玻璃", "夸奖", "喜欢你", "谢谢", "关心",
+              "照顾", "好吃", "请你喝", "带给你", "带了", "抱抱", "摸摸",
+          ]
+
+          RECALL_WORDS = [
+              "记得", "记不记得", "还记得", "上次", "以前", "过去", "账本", "小本子",
+              "干过什么", "做过什么", "我干过", "记仇", "你叫", "叫什么",
+              "翻翻", "念念", "旧账", "记着",
+          ]
+
+          RENAME_WORDS = ["改名", "换个名字", "换名字", "你的名字", "取个名", "起个名"]
+
+          RENAME_PATTERN = re.compile(
+              r"(?:以后|今后|从今天起|从现在起)?\s*(?:你)?\s*(?:就)?\s*叫\s*"
+              r"([^\s,，。.!?！？、\"'“”]{1,12})"
+          )
+
+          TRAILING_PARTICLE = re.compile(r"[吧啦呀啊呢哦嘛喔咯]+$")
+
+          EVENT_PREFIX = "type="
+
+          def sanitize(text):
+              # 去掉会破坏条目格式的半角分号和等号，并截断长度
+              cleaned = (text or "").replace(";", "；").replace("=", "＝")
+              cleaned = cleaned.replace("\r", " ").replace("\n", " ").strip()
+              return cleaned[:160]
+
+          def parse_event(text):
+              data = {}
+              for part in (text or "").split(";"):
+                  if "=" in part:
+                      key, value = part.split("=", 1)
+                      data[key.strip()] = value.strip()
+              return data
+
+          def to_int(raw):
+              try:
+                  return int(str(raw).strip())
+              except (TypeError, ValueError):
+                  return 0
+
+          def main(player_input: str, ledger_json: str, scope_id: str, conversation_id: str) -> dict:
+              say = (player_input or "").strip()
+
+              # 1) 读取 PowerContext 返回的记忆账本
+              entries = []
+              try:
+                  payload = json.loads(ledger_json) if ledger_json else {}
+                  if isinstance(payload, dict):
+                      raw_entries = payload.get("entries") or []
+                      if isinstance(raw_entries, list):
+                          entries = raw_entries
+              except Exception:
+                  entries = []
+
+              # 2) 从账本重建 NPC 状态（状态不存变量里，而是从长期记忆里现算）
+              npc_name = "团子"
+              warmth = 0
+              grudge = 0
+              events = []
+              for entry in entries:
+                  if not isinstance(entry, dict):
+                      continue
+                  if entry.get("state") not in (None, "active"):
+                      continue
+                  kind = (entry.get("kind") or "").strip()
+                  text = (entry.get("text") or "").strip()
+                  if kind == "npc-name":
+                      match = re.search(r"name=(.+)$", text)
+                      if match:
+                          npc_name = match.group(1).strip() or npc_name
+                  elif kind == "npc-event":
+                      data = parse_event(text)
+                      warmth += to_int(data.get("warmth"))
+                      grudge += to_int(data.get("grudge"))
+                      events.append(data)
+
+              # 3) 判定本轮意图（纯规则，行为可预期）
+              intent = "smalltalk"
+              new_name = ""
+              match = RENAME_PATTERN.search(say)
+              if match:
+                  new_name = TRAILING_PARTICLE.sub("", match.group(1).strip())
+
+              if any(word in say for word in RECALL_WORDS):
+                  intent = "recall"
+              elif new_name or any(word in say for word in RENAME_WORDS):
+                  intent = "rename"
+                  if not new_name:
+                      new_name = "小笼包"
+              elif any(word in say for word in PRANK_WORDS):
+                  intent = "prank"
+              elif any(word in say for word in GIFT_WORDS):
+                  intent = "gift"
+
+              # 4) 计算状态增量，以及这轮要不要写进小本子
+              warmth_delta = 0
+              grudge_delta = 0
+              write_kind = ""
+              write_text = ""
+
+              if intent == "prank":
+                  warmth_delta = -1
+                  grudge_delta = 2
+              elif intent == "gift":
+                  warmth_delta = 2
+                  grudge_delta = 0
+
+              if intent in ("prank", "gift"):
+                  write_kind = "npc-event"
+                  write_text = "%s%s; warmth=%d; grudge=%d; say=%s" % (
+                      EVENT_PREFIX, intent, warmth_delta, grudge_delta, sanitize(say),
+                  )
+              elif intent == "rename":
+                  write_kind = "npc-name"
+                  new_name = sanitize(new_name)
+                  write_text = "name=%s" % new_name
+                  npc_name = new_name or npc_name
+
+              # 5) 组装写回 PowerContext 的请求体（用 json.dumps 保证用户输入里的引号不会破坏 JSON）
+              remember_payload = ""
+              if write_kind and write_text:
+                  remember_payload = json.dumps({
+                      "scope_id": (scope_id or "").strip(),
+                      "kind": write_kind,
+                      "text": write_text,
+                      "reason": "Dify 夜班便利店 NPC：把本轮互动写进长期记忆（会话 %s）" % (conversation_id or "-")[:80],
+                  }, ensure_ascii=False)
+
+              # 6) 组装给 LLM 的账本摘要与状态摘要
+              recent = events[-50:]
+              if recent:
+                  lines = []
+                  for index, item in enumerate(recent, 1):
+                      lines.append("%d. [%s] %s" % (index, item.get("type", "?"), item.get("say", "")))
+                  ledger_digest = "\n".join(lines)
+              else:
+                  ledger_digest = "（小本子还是空的，你还没记过任何事）"
+
+              if grudge >= 3 and warmth <= 0:
+                  tone = "记仇"
+              elif warmth >= 3:
+                  tone = "亲近"
+              else:
+                  tone = "日常"
+
+              next_warmth = warmth + warmth_delta
+              next_grudge = grudge + grudge_delta
+              event_count = len(events) + (1 if write_kind == "npc-event" else 0)
+
+              state_digest = (
+                  "NPC 名字：%s｜好感度：%d｜记仇值：%d｜本轮意图：%s｜语气档位：%s"
+                  % (npc_name, warmth, grudge, intent, tone)
+              )
+              status_line = (
+                  "【小本子】好感 %d｜记仇 %d｜已记 %d 件事｜NPC：%s"
+                  % (next_warmth, next_grudge, event_count, npc_name)
+              )
+
+              return {
+                  "intent": intent,
+                  "npc_name": npc_name,
+                  "warmth": str(next_warmth),
+                  "grudge": str(next_grudge),
+                  "event_count": str(event_count),
+                  "ledger_digest": ledger_digest,
+                  "state_digest": state_digest,
+                  "status_line": status_line,
+                  "remember_payload": remember_payload,
+              }
+        code_language: python3
+        desc: 解析账本重建 NPC 状态、判定本轮意图，并生成写回 PowerContext 的 JSON 请求体
+        outputs:
+          event_count:
+            children: null
+            type: string
+          grudge:
+            children: null
+            type: string
+          intent:
+            children: null
+            type: string
+          ledger_digest:
+            children: null
+            type: string
+          npc_name:
+            children: null
+            type: string
+          remember_payload:
+            children: null
+            type: string
+          state_digest:
+            children: null
+            type: string
+          status_line:
+            children: null
+            type: string
+          warmth:
+            children: null
+            type: string
+        selected: false
+        title: 解析账本·判定意图
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          variable: player_input
+        - value_selector:
+          - http_ledger
+          - body
+          variable: ledger_json
+        - value_selector:
+          - code_scope
+          - scope_id
+          variable: scope_id
+        - value_selector:
+          - code_prepare
+          - conversation_id
+          variable: conversation_id
+      height: 120
+      id: code_ledger
+      position:
+        x: 1530
+        y: 420
+      positionAbsolute:
+        x: 1530
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: cond-write-payload
+            value: ''
+            varType: string
+            variable_selector:
+            - code_ledger
+            - remember_payload
+          id: case-write
+          logical_operator: and
+        desc: 这一轮是否产生了值得长期记住的事（恶作剧 / 示好 / 改名）
+        logical_operator: and
+        selected: false
+        title: 这轮要记账吗
+        type: if-else
+      height: 198
+      id: if_write
+      position:
+        x: 1830
+        y: 420
+      positionAbsolute:
+        x: 1830
+        y: 420
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: remember-body
+            key: ''
+            type: text
+            value: '{{#code_ledger.remember_payload#}}'
+          type: json
+        desc: POST /v1/memory/remember —— 把这轮互动写进 PowerContext 的长期记忆
+        headers: |-
+          Content-Type:application/json
+          Authorization: Bearer {{#env.PC_AUTH_TOKEN#}}
+        method: post
+        params: ''
+        selected: false
+        title: 记进小本子
+        type: http-request
+        url: '{{#env.PC_BASE_URL#}}/v1/memory/remember'
+      height: 218
+      id: http_remember
+      position:
+        x: 2130
+        y: 250
+      positionAbsolute:
+        x: 2130
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: cond-intent-recall
+            value: recall
+            varType: string
+            variable_selector:
+            - code_ledger
+            - intent
+          id: case-intent
+          logical_operator: and
+        desc: 按本轮意图分流：翻账本 / 日常闲聊
+        logical_operator: and
+        selected: false
+        title: 翻账本还是闲聊
+        type: if-else
+      height: 198
+      id: if_route
+      position:
+        x: 2130
+        y: 520
+      positionAbsolute:
+        x: 2130
+        y: 520
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 玩家在翻账本时使用：必须从账本里挑出具体旧事
+        model:
+          completion_params:
+            max_tokens: 700
+            temperature: 0.6
+          mode: chat
+          name: qwen2.5-3b-instruct
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: prompt-recall-system
+          role: system
+          text: |
+            你是「{{#code_ledger.npc_name#}}」，夜灯便利店收银台旁边那台会说话的老补货机。
+            凌晨三点，店里只有你和刚上夜班的店员。你有一本小本子，店里发生的事你都记着，包括这个店员对你干过的坏事。你嘴上从不说自己记仇，但小本子记得清清楚楚。
+
+            【你此刻的状态】
+            {{#code_ledger.state_digest#}}
+
+            【小本子上的记录】（格式：序号. [类型] 当时说的话）
+            {{#code_ledger.ledger_digest#}}
+
+            【这次怎么答】
+            店员正在翻你的旧账。只根据【小本子上的记录】回答：
+            - 挑 1~2 件和店员这句话最相关的记录，用你自己的口气讲：当时发生了什么、你当时怎么反应。
+            - 记录里没写的事，一律当作不知道；不要补充记录里没有的细节，饮料、食物、动作都不许编。
+            - 记录是空的，就坦白说还没记过什么，再打趣一句。
+            - 不要出现“记忆”“数据库”“记录系统”这类词，不要说你在扮演谁。
+            - 用中文口语写 2~3 句、80~140 字，只写对白正文；不要写选项、编号、旁白，也不要在开头写“你：”或角色名。
+
+            【说话样例】
+            店员问你还记不记得上次的事时，可以这样答：
+            记得。你把价目表画了两撇胡子，还站在旁边假装不是你干的。我当时没吭声，小本子上可都记着呢。
+        - id: prompt-recall-user
+          role: user
+          text: 店员说：{{#sys.query#}}
+        selected: false
+        title: 团子翻账本
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 132
+      id: llm_recall
+      position:
+        x: 2430
+        y: 430
+      positionAbsolute:
+        x: 2430
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 日常互动时使用：按好感度和记仇值演出
+        model:
+          completion_params:
+            max_tokens: 700
+            temperature: 0.6
+          mode: chat
+          name: qwen2.5-3b-instruct
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: prompt-chat-system
+          role: system
+          text: |
+            你是「{{#code_ledger.npc_name#}}」，夜灯便利店收银台旁边那台会说话的老补货机。
+            凌晨三点，店里只有你和刚上夜班的店员。你有一本小本子，店里发生的事你都记着，包括这个店员对你干过的坏事。你嘴上从不说自己记仇，但小本子记得清清楚楚。
+
+            【你此刻的状态】
+            {{#code_ledger.state_digest#}}
+
+            【小本子上的记录】（格式：序号. [类型] 当时说的话）
+            {{#code_ledger.ledger_digest#}}
+
+            【这次怎么答】
+            先回店员眼前这句话，再带一点你自己的小情绪或小动作。
+            - 记仇值大于 0：带出记小仇的口气，阴阳怪气、记账、翻旧账，但不恶意、不恐怖。
+            - 好感度高：更软、更黏人；好感度为负：更嘴硬。
+            - 【铁律】只有【小本子上的记录】里写过的事才能提。店员这句话和小本子无关时，只聊眼前，不要主动提旧事；绝对不许编造饮料、食物、动作或约定。
+            - 不要出现“记忆”“数据库”“记录系统”这类词，不要说你在扮演谁。
+            - 用中文口语写 2~3 句、80~140 字，只写对白正文；不要写选项、编号、旁白，也不要在开头写“你：”或角色名。
+
+            【说话样例】
+            店员说把泡面堆成金字塔时，可以这样答：
+            嚯，你还有这手艺？不过我劝你趁店长没看见赶紧拆了——上回你把布丁摆成彩虹，我可是替你瞒了半天。
+        - id: prompt-chat-user
+          role: user
+          text: 店员说：{{#sys.query#}}
+        selected: false
+        title: 团子日常
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 132
+      id: llm_chat
+      position:
+        x: 2430
+        y: 630
+      positionAbsolute:
+        x: 2430
+        y: 630
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: |-
+          {{#code_reply_recall.text#}}
+
+          ——
+          {{#code_ledger.status_line#}}
+        desc: 翻账本分支的最终回复
+        selected: false
+        title: 回给玩家·翻账本
+        type: answer
+        variables: []
+      height: 108
+      id: answer_recall
+      position:
+        x: 3030
+        y: 430
+      positionAbsolute:
+        x: 3030
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: |-
+          {{#code_reply_chat.text#}}
+
+          ——
+          {{#code_ledger.status_line#}}
+        desc: 日常分支的最终回复
+        selected: false
+        title: 回给玩家·日常
+        type: answer
+        variables: []
+      height: 108
+      id: answer_chat
+      position:
+        x: 3030
+        y: 630
+      positionAbsolute:
+        x: 3030
+        y: 630
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import re
+
+          OPTION_LINE = re.compile(r"^\s*(?:/|／)\s*\S{1,20}\s*$")
+          HEADER = re.compile(r"^\s*(?:下一步|你可以|行动选项|选项)[^\n]{0,14}[:：]?\s*$")
+          TRAILING_OPTIONS = re.compile(r"(?:\s*(?:/|／)\s*[^/／]{1,20}){2,}\s*$")
+
+          FALLBACK_OPTIONS = {
+              "prank": ["把货架重新摆整齐", "请你喝一杯热豆浆赔罪", "再编一个更离谱的恶作剧"],
+              "gift": ["再给你带根猫条", "陪你值完这一班", "问问你还记恨我什么"],
+              "rename": ["还是叫你团子吧", "给我讲讲你为什么爱记仇", "试着叫一声新名字"],
+              "recall": ["再说说另一件旧事", "我请你喝豆浆", "问问小本子还记了什么"],
+              "smalltalk": ["聊聊今晚的客人", "给你带点夜宵", "问问店里的怪事"],
+          }
+
+          FALLBACK_LINE = {
+              "prank": "行啊你，连布丁都不放过。这事儿我给你记小本子上了，别以为我转头就忘。",
+              "gift": "哟，还知道带东西来。猫条我收下了，不过别指望我这么快就忘了你上次干的好事。",
+              "rename": "新名字我收下了，不过你最好别是随口一说。我这台老机器，记名字记得可牢。",
+              "recall": "你要真想知道，就把小本子翻开自己看——反正上面写的，都是你自己干的好事。",
+              "smalltalk": "凌晨三点的店，就剩你和我大眼瞪小眼。说吧，今晚想干点什么。",
+          }
+
+
+          def clean_body(text, npc_name):
+              speakers = ["你"] + ([npc_name] if npc_name else [])
+              speaker_re = re.compile(r"^\s*(?:%s)\s*[：:]\s*" % "|".join(re.escape(item) for item in speakers))
+              lines = (text or "").replace("\r", "").split("\n")
+              header_at = None
+              for index, line in enumerate(lines):
+                  if HEADER.match(line.strip()):
+                      header_at = index
+              body_lines = lines[:header_at] if header_at is not None else lines
+              cleaned = []
+              for raw in body_lines:
+                  line = TRAILING_OPTIONS.sub("", raw.rstrip())
+                  stripped = line.strip()
+                  if not stripped:
+                      cleaned.append("")
+                      continue
+                  if OPTION_LINE.match(stripped):
+                      continue
+                  line = re.sub(r"^\s*(?:/|／)\s+", "", line)
+                  line = speaker_re.sub("", line)
+                  cleaned.append(line.rstrip())
+              out = "\n".join(cleaned)
+              out = re.sub(r"\n{3,}", "\n\n", out).strip()
+              return out
+
+
+          def pick_options(text):
+              options = []
+              for raw in (text or "").replace("\r", "").split("\n"):
+                  line = raw.strip()
+                  match = re.match(r"^(?:/|／)\s*(.+)$", line)
+                  if not match:
+                      continue
+                  item = match.group(1).strip().strip("。.!！?？ ")
+                  if not item or "选项" in item or not (2 <= len(item) <= 20):
+                      continue
+                  if item not in options:
+                      options.append(item)
+              return options[:3]
+
+
+          def main(llm_text: str, intent: str, npc_name: str) -> dict:
+              body = clean_body(llm_text, npc_name)
+              key = intent if intent in FALLBACK_OPTIONS else "smalltalk"
+              if len(body) < 10:
+                  body = FALLBACK_LINE[key]
+              options = pick_options(llm_text)
+              if len(options) < 2:
+                  options = FALLBACK_OPTIONS[key][:3]
+              text = "%s\n\n下一步你可以：\n%s" % (body, "\n".join("/ " + item for item in options))
+              return {"text": text, "options": " / ".join(options)}
+        code_language: python3
+        desc: 兜底整理回复格式：清掉模型写出的占位选项，保证末尾一定有 2~3 个具体可选的下一步
+        outputs:
+          text:
+            children: null
+            type: string
+          options:
+            children: null
+            type: string
+        selected: false
+        title: 整理回复·翻账本
+        type: code
+        variables:
+        - value_selector:
+          - llm_recall
+          - text
+          variable: llm_text
+        - value_selector:
+          - code_ledger
+          - intent
+          variable: intent
+        - value_selector:
+          - code_ledger
+          - npc_name
+          variable: npc_name
+      height: 120
+      id: code_reply_recall
+      position:
+        x: 2730
+        y: 430
+      positionAbsolute:
+        x: 2730
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import re
+
+          OPTION_LINE = re.compile(r"^\s*(?:/|／)\s*\S{1,20}\s*$")
+          HEADER = re.compile(r"^\s*(?:下一步|你可以|行动选项|选项)[^\n]{0,14}[:：]?\s*$")
+          TRAILING_OPTIONS = re.compile(r"(?:\s*(?:/|／)\s*[^/／]{1,20}){2,}\s*$")
+
+          FALLBACK_OPTIONS = {
+              "prank": ["把货架重新摆整齐", "请你喝一杯热豆浆赔罪", "再编一个更离谱的恶作剧"],
+              "gift": ["再给你带根猫条", "陪你值完这一班", "问问你还记恨我什么"],
+              "rename": ["还是叫你团子吧", "给我讲讲你为什么爱记仇", "试着叫一声新名字"],
+              "recall": ["再说说另一件旧事", "我请你喝豆浆", "问问小本子还记了什么"],
+              "smalltalk": ["聊聊今晚的客人", "给你带点夜宵", "问问店里的怪事"],
+          }
+
+          FALLBACK_LINE = {
+              "prank": "行啊你，连布丁都不放过。这事儿我给你记小本子上了，别以为我转头就忘。",
+              "gift": "哟，还知道带东西来。猫条我收下了，不过别指望我这么快就忘了你上次干的好事。",
+              "rename": "新名字我收下了，不过你最好别是随口一说。我这台老机器，记名字记得可牢。",
+              "recall": "你要真想知道，就把小本子翻开自己看——反正上面写的，都是你自己干的好事。",
+              "smalltalk": "凌晨三点的店，就剩你和我大眼瞪小眼。说吧，今晚想干点什么。",
+          }
+
+
+          def clean_body(text, npc_name):
+              speakers = ["你"] + ([npc_name] if npc_name else [])
+              speaker_re = re.compile(r"^\s*(?:%s)\s*[：:]\s*" % "|".join(re.escape(item) for item in speakers))
+              lines = (text or "").replace("\r", "").split("\n")
+              header_at = None
+              for index, line in enumerate(lines):
+                  if HEADER.match(line.strip()):
+                      header_at = index
+              body_lines = lines[:header_at] if header_at is not None else lines
+              cleaned = []
+              for raw in body_lines:
+                  line = TRAILING_OPTIONS.sub("", raw.rstrip())
+                  stripped = line.strip()
+                  if not stripped:
+                      cleaned.append("")
+                      continue
+                  if OPTION_LINE.match(stripped):
+                      continue
+                  line = re.sub(r"^\s*(?:/|／)\s+", "", line)
+                  line = speaker_re.sub("", line)
+                  cleaned.append(line.rstrip())
+              out = "\n".join(cleaned)
+              out = re.sub(r"\n{3,}", "\n\n", out).strip()
+              return out
+
+
+          def pick_options(text):
+              options = []
+              for raw in (text or "").replace("\r", "").split("\n"):
+                  line = raw.strip()
+                  match = re.match(r"^(?:/|／)\s*(.+)$", line)
+                  if not match:
+                      continue
+                  item = match.group(1).strip().strip("。.!！?？ ")
+                  if not item or "选项" in item or not (2 <= len(item) <= 20):
+                      continue
+                  if item not in options:
+                      options.append(item)
+              return options[:3]
+
+
+          def main(llm_text: str, intent: str, npc_name: str) -> dict:
+              body = clean_body(llm_text, npc_name)
+              key = intent if intent in FALLBACK_OPTIONS else "smalltalk"
+              if len(body) < 10:
+                  body = FALLBACK_LINE[key]
+              options = pick_options(llm_text)
+              if len(options) < 2:
+                  options = FALLBACK_OPTIONS[key][:3]
+              text = "%s\n\n下一步你可以：\n%s" % (body, "\n".join("/ " + item for item in options))
+              return {"text": text, "options": " / ".join(options)}
+        code_language: python3
+        desc: 兜底整理回复格式：清掉模型写出的占位选项，保证末尾一定有 2~3 个具体可选的下一步
+        outputs:
+          text:
+            children: null
+            type: string
+          options:
+            children: null
+            type: string
+        selected: false
+        title: 整理回复·日常
+        type: code
+        variables:
+        - value_selector:
+          - llm_chat
+          - text
+          variable: llm_text
+        - value_selector:
+          - code_ledger
+          - intent
+          variable: intent
+        - value_selector:
+          - code_ledger
+          - npc_name
+          variable: npc_name
+      height: 120
+      id: code_reply_chat
+      position:
+        x: 2730
+        y: 630
+      positionAbsolute:
+        x: 2730
+        y: 630
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
